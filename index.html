@@ -53,11 +53,11 @@
 </head>
 <body>
 
-	<p style="color:red;float:right;">STEAM API UPDATES EVERY FIFTH MINUTE</p>
-	<input type="number" name="width" value="400" onchange="changeWidth()">
+<input type="number" name="width" value="400" onchange="changeWidth()"><br><br>
+<p style="color:red;float:right;margin:0px;">STEAM API UPDATES EVERY FIFTH MINUTE</p>
 
-	<p>0/135 (0%)</p>
-	<table></table>
+<p>0/135 (0%)</p>
+<table></table>
 
 </body>
 
@@ -124,7 +124,7 @@ function loadAll()
 		cached_achievments[data[items[key][0]][0]] = items[key][1];
 	}
 
-	document.getElementsByTagName("p")[0].innerHTML = total_completed.toString() + "/135 (" + Math.round(100 * total_completed / 135) + "%)";
+	document.getElementsByTagName("p")[1].innerHTML = total_completed.toString() + "/135 (" + Math.round(100 * total_completed / 135) + "%)";
 }
 
 function main()
@@ -133,7 +133,7 @@ function main()
 	document.getElementsByTagName("table")[0].innerHTML = "";
 
 	loadAll();
-	setTimeout(main, 10000);
+	setTimeout(main, 20000);
 }
 
 let cached_achievments = {};
