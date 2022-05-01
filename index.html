@@ -42,12 +42,20 @@
 		{
 			float: right;
 		}
+
+		p
+		{
+			font-family: 'Roboto', sans-serif;
+			font-size: 16px;
+			color: #f2f2f2;
+		}
 	</style>
 </head>
 <body>
 
 <input type="number" name="width" value="400" onchange="changeWidth()">
 
+<p>0/135 (0%)</p>
 <table></table>
 
 </body>
@@ -85,6 +93,8 @@ function loadAll()
 	var url = "https://grioghyjtf.link/SAReq.php";
 	const obj = JSON.parse(httpGet(url));
 
+	var completed = 0;
+
 	var unsorted = {};
 	var data = {};
 
@@ -95,7 +105,6 @@ function loadAll()
 			var d = achievement_data[obj['playerstats']['achievements'][i]['apiname']];
 			unsorted[d[0]] = obj['playerstats']['achievements'][i]['unlocktime'];
 			data[d[0]] = d;
-			//addAchievment(d[2], obj['playerstats']['achievements'][i]['unlocktime'], d[0], d[1]);
 		}
 	}
 
@@ -106,8 +115,20 @@ function loadAll()
 	{
 		var date = new Date(items[key][1] * 1000).toLocaleDateString();
 		var time = new Date(items[key][1] * 1000).toLocaleTimeString();
-		addAchievment(data[items[key][0]][2], date + " " + time, data[items[key][0]][0], data[items[key][0]][1]);
+
+		if(!chached_data.hasOwnProperty(data[items[key][0]][0]))
+		{
+			total_completed += 1;
+			chached_data[data[items[key][0]][0]] = [data[items[key][0]][2], date + " " + time, data[items[key][0]][1]];
+		}
 	}
+
+	for (var key in chached_data)
+	{
+		addAchievment(chached_data[key][0], chached_data[key][1], key, chached_data[key][2]);
+	}
+
+	document.getElementsByTagName("p")[0].innerHTML = total_completed.toString() + "/135 (" + Math.round(100 * total_completed / 135) + "%)";
 }
 
 function main()
@@ -115,8 +136,11 @@ function main()
 	console.log("Updated");
 	document.getElementsByTagName("table")[0].innerHTML = "";
 	loadAll();
-	setTimeout(main, 5000);
+	setTimeout(main, 10000);
 }
+
+let total_completed = 0;
+let chached_data = {};
 
 main();
 
