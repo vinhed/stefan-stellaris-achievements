@@ -144,14 +144,15 @@ function main()
 {
 	console.log("Updated");
 	document.getElementsByTagName("table")[0].innerHTML = "";
-	location.reload();
+	loadAll();
+	setTimeout(main, 10000);
 }
 
 let total_completed = 0;
 let chached_data = {};
 
-loadAll();
-setTimeout(main, 10000);
+main();
+
 
 </script>
 </html>
