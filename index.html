@@ -90,6 +90,7 @@ function httpGet(theUrl)
 
 function loadAll()
 {
+	total_completed = 0;
 	var url = "https://grioghyjtf.link/SAReq.php";
 	const obj = JSON.parse(httpGet(url));
 
@@ -116,25 +117,9 @@ function loadAll()
 		var date = new Date(items[key][1] * 1000).toLocaleDateString();
 		var time = new Date(items[key][1] * 1000).toLocaleTimeString();
 
-		if(!chached_data.hasOwnProperty(data[items[key][0]][0]))
-		{
-			total_completed += 1;
-			chached_data[data[items[key][0]][0]] = [data[items[key][0]][2], date + " " + time, data[items[key][0]][1]];
-		}
-	}
-
-	var _unsorted = {};
-	for (var key in chached_data)
-	{
-		_unsorted[key] = chached_data[key][1];
-	}
-
-	var _items = Object.keys(_unsorted).map(function(key) { return [key, _unsorted[key]]; });
-	_items.sort(function(first, second) { return second[1] - first[1]; });
-	
-	for (var id in _items)
-	{
-		addAchievment(data[_items[id][0]][2], _items[id][1], data[_items[id][0]][0], data[_items[id][0]][1]);
+		total_completed += 1;
+		addAchievment(data[items[key][0]][2], date + " " + time, data[items[key][0]][0], data[items[key][0]][1]);
+		cached_achievments[]
 	}
 
 	document.getElementsByTagName("p")[0].innerHTML = total_completed.toString() + "/135 (" + Math.round(100 * total_completed / 135) + "%)";
@@ -144,12 +129,13 @@ function main()
 {
 	console.log("Updated");
 	document.getElementsByTagName("table")[0].innerHTML = "";
+
 	loadAll();
-	setTimeout(main, 10000);
+	setTimeout(main, 20000);
 }
 
+let cached_achievments = {};
 let total_completed = 0;
-let chached_data = {};
 
 main();
 
