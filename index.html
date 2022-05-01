@@ -65,7 +65,7 @@
 function addAchievment(img_url, date, title, reason)
 {
 	var s = '<tr><td><img src="' + img_url + '"></td><td><span class="a">' + date + '</span><br><span class="b">' + title + '</span><br><span class="a">' + reason + '</span></td></tr>';
-	document.getElementsByTagName("table")[0].innerHTML += s;
+	document.getElementsByTagName("table")[0].innerHTML = s + document.getElementsByTagName("table")[0].innerHTML;
 }
 
 function changeWidth()
