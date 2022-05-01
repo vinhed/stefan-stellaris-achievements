@@ -101,10 +101,11 @@ function loadAll()
 
 	for(var i = 0; i < obj['playerstats']['achievements'].length; i++)
 	{
-		if(obj['playerstats']['achievements'][i]['achieved'] == 1)
+		if(obj['playerstats']['achievements'][i]['achieved'] == 1 || cached_achievments.hasOwnProperty(achievement_data[obj['playerstats']['achievements'][i]['apiname']][0]))
 		{
 			var d = achievement_data[obj['playerstats']['achievements'][i]['apiname']];
 			unsorted[d[0]] = obj['playerstats']['achievements'][i]['unlocktime'];
+			if(obj['playerstats']['achievements'][i]['unlocktime'] == 0) {unsorted[d[0]] = cached_achievments[achievement_data[obj['playerstats']['achievements'][i]['apiname']][0]];}
 			data[d[0]] = d;
 		}
 	}
@@ -119,7 +120,7 @@ function loadAll()
 
 		total_completed += 1;
 		addAchievment(data[items[key][0]][2], date + " " + time, data[items[key][0]][0], data[items[key][0]][1]);
-		cached_achievments[]
+		cached_achievments[data[items[key][0]][0]] = items[key][1];
 	}
 
 	document.getElementsByTagName("p")[0].innerHTML = total_completed.toString() + "/135 (" + Math.round(100 * total_completed / 135) + "%)";
